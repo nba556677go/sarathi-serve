@@ -2,7 +2,7 @@ name: sarathi-vidur
 channels:
   - conda-forge
 dependencies:
-  - python=3.10.13
+  - python=3.10.18
   - setuptools
   - pip
   - make
