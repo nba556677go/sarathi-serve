@@ -98,6 +98,14 @@ class MetricsStore:
 
     @classmethod
     def get_instance(cls):
+        if not hasattr(cls, '_instance'):
+            # Create a disabled instance for profiling scenarios
+            from sarathi.config import MetricsConfig, ModelConfig, ReplicaConfig
+            cls._instance = cls(
+                replica_config=ReplicaConfig(replica_id=0, output_dir="/tmp"),
+                model_config=ModelConfig(),
+                metrics_config=MetricsConfig(write_metrics=False)
+            )
         return cls._instance
 
     def is_op_enabled(

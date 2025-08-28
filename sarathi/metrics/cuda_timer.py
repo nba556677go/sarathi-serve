@@ -25,6 +25,8 @@ class CudaTimer:
             return
 
         self.use_cuda_events = False
+        self.enable_memory_profiling = (name == OperationMetrics.ATTN_KV_CACHE_SAVE)
+        self.initial_memory = None
 
         self.profiler = torch.profiler.profile(
             activities=[torch.profiler.ProfilerActivity.CUDA],
@@ -36,6 +38,10 @@ class CudaTimer:
     def __enter__(self):
         if self.disabled:
             return
+
+        if self.enable_memory_profiling:
+            torch.cuda.synchronize()
+            self.initial_memory = torch.cuda.memory_allocated()
 
         if self.use_cuda_events:
             self.start_event = torch.cuda.Event(enable_timing=True)
@@ -56,6 +62,14 @@ class CudaTimer:
     def __exit__(self, *args):
         if self.disabled:
             return
+
+        if self.enable_memory_profiling:
+            torch.cuda.synchronize()
+            final_memory = torch.cuda.memory_allocated()
+            memory_delta = (final_memory - self.initial_memory) / (1024 * 1024)  # MB
+            self.metrics_store.push_operation_metrics(
+                f"{self.name.value}_memory_mb", memory_delta
+            )
 
         if self.use_cuda_events:
             self.end_event = torch.cuda.Event(enable_timing=True)
