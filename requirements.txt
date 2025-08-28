@@ -1,6 +1,6 @@
 ninja  # For faster builds.
 psutil
-ray >= 2.5.1
+ray == 2.47.1
 pandas  # Required for Ray data.
 pyarrow  # Required for Ray data.
 sentencepiece  # Required for LLaMA tokenizer.
@@ -14,7 +14,7 @@ wandb
 kaleido
 ddsketch
 jupyterlab
-flashinfer >= 0.0.5
+flashinfer == 0.1.5
 pillow
 tiktoken
 grpcio

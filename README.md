@@ -19,8 +19,8 @@ git clone git@github.com:microsoft/sarathi-serve.git
 Setup mamba if you don't already have it,
 
 ```sh
-wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
-bash Mambaforge-Linux-x86_64.sh # follow the instructions from there
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+bash Miniforge3-Linux-x86_64.sh # follow the instructions from there
 ```
 
 Create a Python 3.10 environment,

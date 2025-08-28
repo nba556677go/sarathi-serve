@@ -1,0 +1,17 @@
+name: sarathi-vidur
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.18
+  - setuptools
+  - pip
+  - make
+  - black=24.4.2
+  - isort=5.13.2
+  - flake8=7.1.0
+  - autopep8=2.3.0
+  - pip:
+    - --extra-index-url https://flashinfer.ai/whl/cu121/torch2.3/
+    - -e /home/ec2-user/sarathi-serve
+    - -r /home/ec2-user/sarathi-serve/requirements.txt
+    - -r /home/ec2-user/vidur-simulator/requirements.txt  # generated from uv.lock (see below)

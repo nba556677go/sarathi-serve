@@ -219,6 +219,25 @@ class FlashinferAttentionWrapper(BaseAttentionWrapper):
             value = value.contiguous().reshape(-1, self.num_kv_heads, self.head_dim)
 
         output = torch.empty_like(query)
+        #print( self.append_kv_last_page_len_tensor)
+        #print(self.append_kv_page_indptr_tensor)
+        # Generate batch_indices and positions from append_qo_indptr_tensor
+        #seq_lens = get_seq_lens(
+        #    self.append_kv_page_indptr_tensor, 
+        #    self.append_kv_last_page_len_tensor, 
+        #    self.block_size
+        #)
+        #print(f"seqlens", seq_lens)
+        # Total number of KV entries is the last element of the indptr
+        nnz = int(self.append_kv_page_indptr_tensor[-1].item())
+
+        #batch_indices, positions = get_batch_indices_positions(
+        #    self.append_kv_page_indptr_tensor,
+        #    seq_lens,
+        #    nnz,
+        #)
+        #print(f"batch_indices", batch_indices)
+        #print(f"positions", positions)
 
         with self.get_timer(OperationMetrics.ATTN_KV_CACHE_SAVE, layer_id):
             # Create batch_indices and positions tensors based on the sequence structure
